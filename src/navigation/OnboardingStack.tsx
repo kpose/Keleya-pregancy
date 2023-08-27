@@ -2,7 +2,7 @@ import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import {IOnboardingStackParamList} from './interfaces';
 
-import Landing from '../screens/Landing';
+import Landing from '../screens/Landing/Landing';
 
 const Stack = createStackNavigator<IOnboardingStackParamList>();
 
