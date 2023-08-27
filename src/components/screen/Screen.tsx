@@ -10,6 +10,7 @@ import {
 import {useIsFocused} from '@react-navigation/native';
 import {IScreenProps} from './interfaces';
 import {colors} from '../../configs/colors.config';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 /**
  * This component is used to configure screens.
  * @param props IScreenProps
@@ -23,6 +24,7 @@ const Screen: IScreenProps = function Screen({
   ...props
 }) {
   const isFocused = useIsFocused();
+  const {top} = useSafeAreaInsets();
 
   const statusbarStyle = useMemo((): StatusBarStyle | null => {
     if (props.statusbarStyle) {
@@ -36,7 +38,7 @@ const Screen: IScreenProps = function Screen({
       return props.statusbarColor;
     }
 
-    return colors.greyishBrown;
+    return colors.white;
   }, [props.statusbarColor]);
 
   const setStatusBarBackgroundColor = useCallback(() => {
@@ -65,11 +67,13 @@ const Screen: IScreenProps = function Screen({
   return (
     <>
       {noKeyboardAvoidingView ? (
-        <View style={[styles.container, style]}>{children}</View>
+        <View style={[styles.container, style, {paddingTop: top}]}>
+          {children}
+        </View>
       ) : (
         <KeyboardAvoidingView
           keyboardVerticalOffset={keyboardOffset}
-          style={[styles.container, style]}
+          style={[styles.container, style, {paddingTop: top}]}
           behavior={Platform.select({ios: 'padding', android: undefined})}>
           {children}
         </KeyboardAvoidingView>
@@ -90,7 +94,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    backgroundColor: colors.warmGrey,
+    backgroundColor: colors.white,
   },
 });
 
