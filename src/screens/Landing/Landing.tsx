@@ -12,6 +12,13 @@ import {colors} from '../../configs/colors.config';
 import {ILandingScreenProps} from './interfaces';
 
 const Landing: ILandingScreenProps = ({navigation}) => {
+  const handleSignup = () => {
+    navigation.navigate('Signup');
+  };
+
+  const handleSignin = () => {
+    return;
+  };
   return (
     <Screen>
       <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
@@ -30,11 +37,11 @@ const Landing: ILandingScreenProps = ({navigation}) => {
           />
         </View>
 
-        <Pressable style={styles.button}>
+        <Pressable style={styles.button} onPress={handleSignup}>
           <Text style={styles.getStartedText}>Get Started</Text>
         </Pressable>
 
-        <Pressable style={styles.login}>
+        <Pressable style={styles.login} onPress={handleSignin}>
           <Text style={styles.loginText}>Or Login</Text>
         </Pressable>
       </ScrollView>
