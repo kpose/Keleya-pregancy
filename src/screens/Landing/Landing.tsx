@@ -10,6 +10,7 @@ import React from 'react';
 import Screen from '../../components/Screen/Screen';
 import {colors} from '../../configs/colors.config';
 import {ILandingScreenProps} from './interfaces';
+import Button from '../../components/Button/Button';
 
 const Landing: ILandingScreenProps = ({navigation}) => {
   const handleSignup = () => {
@@ -37,9 +38,7 @@ const Landing: ILandingScreenProps = ({navigation}) => {
           />
         </View>
 
-        <Pressable style={styles.button} onPress={handleSignup}>
-          <Text style={styles.getStartedText}>Get Started</Text>
-        </Pressable>
+        <Button title="Get Started" onPress={handleSignup} loading={true} />
 
         <Pressable style={styles.login} onPress={handleSignin}>
           <Text style={styles.loginText}>Or Login</Text>
