@@ -11,8 +11,10 @@ import Screen from '../../components/Screen/Screen';
 import {colors} from '../../configs/colors.config';
 import {ILandingScreenProps} from './interfaces';
 import Button from '../../components/Button/Button';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 const Landing: ILandingScreenProps = ({navigation}) => {
+  const {top} = useSafeAreaInsets();
   const handleSignup = () => {
     navigation.navigate('Signup');
   };
@@ -23,7 +25,7 @@ const Landing: ILandingScreenProps = ({navigation}) => {
   return (
     <Screen>
       <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
-        <View style={styles.logoContainer}>
+        <View style={[styles.logoContainer, {paddingTop: top}]}>
           <Image
             style={styles.logo}
             resizeMode="contain"
