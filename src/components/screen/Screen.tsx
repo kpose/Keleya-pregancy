@@ -67,13 +67,13 @@ const Screen: IScreenProps = function Screen({
   return (
     <>
       {noKeyboardAvoidingView ? (
-        <View style={[styles.container, style, {paddingTop: top}]}>
+        <View style={[styles.container, style /* {paddingTop: top} */]}>
           {children}
         </View>
       ) : (
         <KeyboardAvoidingView
           keyboardVerticalOffset={keyboardOffset}
-          style={[styles.container, style, {paddingTop: top}]}
+          style={[styles.container, style /* {paddingTop: top} */]}
           behavior={Platform.select({ios: 'padding', android: undefined})}>
           {children}
         </KeyboardAvoidingView>
