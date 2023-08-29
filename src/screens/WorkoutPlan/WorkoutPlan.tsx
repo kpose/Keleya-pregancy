@@ -43,7 +43,10 @@ const WorkoutPlan: IWorkoutPlanScreenProps = ({navigation}) => {
         />
 
         <View style={styles.buttonContainer}>
-          <Button title="Continue" />
+          <Button
+            title="Continue"
+            onPress={() => navigation.navigate('Success')}
+          />
         </View>
       </View>
     </Screen>

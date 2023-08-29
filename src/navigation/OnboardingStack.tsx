@@ -7,6 +7,7 @@ import Signup from '../screens/Signup/Signup';
 import Name from '../screens/Name/Name';
 import DueDate from '../screens/DueDate/DueDate';
 import WorkoutPlan from '../screens/WorkoutPlan/WorkoutPlan';
+import Success from '../screens/Success/Success';
 
 const Stack = createStackNavigator<IOnboardingStackParamList>();
 
@@ -18,6 +19,7 @@ export function OnboardingStack() {
       <Stack.Screen name="Name" component={Name} />
       <Stack.Screen name="DueDate" component={DueDate} />
       <Stack.Screen name="WorkoutPlan" component={WorkoutPlan} />
+      <Stack.Screen name="Success" component={Success} />
     </Stack.Navigator>
   );
 }
