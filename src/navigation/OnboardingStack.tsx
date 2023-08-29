@@ -4,6 +4,7 @@ import {IOnboardingStackParamList} from './interfaces';
 
 import Landing from '../screens/Landing/Landing';
 import Signup from '../screens/Signup/Signup';
+import Name from '../screens/Name/Name';
 
 const Stack = createStackNavigator<IOnboardingStackParamList>();
 
@@ -12,6 +13,7 @@ export function OnboardingStack() {
     <Stack.Navigator screenOptions={{headerShown: false}}>
       <Stack.Screen name="Landing" component={Landing} />
       <Stack.Screen name="Signup" component={Signup} />
+      <Stack.Screen name="Name" component={Name} />
     </Stack.Navigator>
   );
 }

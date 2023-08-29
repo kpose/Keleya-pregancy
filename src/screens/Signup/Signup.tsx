@@ -67,7 +67,10 @@ const Signup: ISignupScreenProps = ({navigation}) => {
         </View>
 
         <View style={styles.buttonContainer}>
-          <Button title="Create account" />
+          <Button
+            title="Create account"
+            onPress={() => navigation.navigate('Name')}
+          />
         </View>
       </ScrollView>
     </Screen>

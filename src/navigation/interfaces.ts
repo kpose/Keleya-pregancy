@@ -2,4 +2,5 @@
 export type IOnboardingStackParamList = {
   Landing: undefined;
   Signup: undefined;
+  Name: undefined;
 };
