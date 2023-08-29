@@ -40,7 +40,10 @@ const Landing: ILandingScreenProps = ({navigation}) => {
           />
         </View>
 
-        <Button title="Get Started" onPress={handleSignup} loading={true} />
+        <Button
+          title="Get Started"
+          onPress={handleSignup} /* loading={true} */
+        />
 
         <Pressable style={styles.login} onPress={handleSignin}>
           <Text style={styles.loginText}>Or Login</Text>
