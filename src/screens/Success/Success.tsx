@@ -5,36 +5,33 @@ import Screen from '../../components/Screen/Screen';
 import {colors} from '../../configs/colors.config';
 import Input from '../../components/Input/Input';
 import Button from '../../components/Button/Button';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 const Success: INameScreenProps = ({navigation}) => {
   const [name, setName] = useState('');
+  const {top, bottom} = useSafeAreaInsets();
 
   return (
     <Screen>
-      <ScrollView>
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <Text style={[{paddingTop: top + 20}, styles.heading]}>
+          Get notifications to boost your motivation
+        </Text>
         <Image
           style={styles.firstImage}
           resizeMode="cover"
-          source={require('../../assets/images/couch_smile.jpg')}
+          source={require('../../assets/images/notifications.jpg')}
         />
 
-        <Text style={styles.title}>
-          It's great that you are here! First things first, what should we call
-          you
-        </Text>
+        <View style={[styles.footer, {bottom: bottom}]}>
+          <Text style={styles.skip}>Skip</Text>
 
-        <Input
-          placeholder="example@gmail.com"
-          value={name}
-          onChange={() => setName}
-          errorMessage="Enter a valid name"
-        />
-
-        <View style={styles.buttonContainer}>
-          <Button
-            title="Continue"
-            onPress={() => navigation.navigate('DueDate')}
-          />
+          <View style={styles.buttonContainer}>
+            <Button
+              title="Allow notifications"
+              onPress={() => navigation.navigate('DueDate')}
+            />
+          </View>
         </View>
       </ScrollView>
     </Screen>
@@ -45,8 +42,14 @@ export default Success;
 
 const styles = StyleSheet.create({
   firstImage: {
-    height: 550,
+    height: 800,
     width: '100%',
+  },
+  skip: {
+    alignSelf: 'center',
+    fontSize: 20,
+    fontWeight: '400',
+    marginTop: 40,
   },
   title: {
     color: colors.greyishBrown,
@@ -66,6 +69,19 @@ const styles = StyleSheet.create({
     marginLeft: 10,
   },
   buttonContainer: {
-    marginVertical: 40,
+    marginBottom: 20,
+    marginTop: 8,
+  },
+  heading: {
+    alignSelf: 'center',
+    fontWeight: '300',
+    fontSize: 30,
+    textAlign: 'center',
+  },
+  footer: {
+    position: 'absolute',
+    left: 16,
+    right: 16,
+    alignItems: 'center',
   },
 });
