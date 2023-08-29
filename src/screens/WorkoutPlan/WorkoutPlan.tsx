@@ -1,13 +1,15 @@
 import {StyleSheet, Image, Text, ScrollView, View} from 'react-native';
 import React, {useState} from 'react';
-import {INameScreenProps} from './interfaces';
+import {IWorkoutPlanScreenProps} from './interfaces';
 import Screen from '../../components/Screen/Screen';
 import {colors} from '../../configs/colors.config';
 import Input from '../../components/Input/Input';
 import Button from '../../components/Button/Button';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
-const Name: INameScreenProps = ({navigation}) => {
+const WorkoutPlan: IWorkoutPlanScreenProps = ({navigation}) => {
   const [name, setName] = useState('');
+  const {top} = useSafeAreaInsets();
 
   return (
     <Screen>
@@ -15,12 +17,11 @@ const Name: INameScreenProps = ({navigation}) => {
         <Image
           style={styles.firstImage}
           resizeMode="cover"
-          source={require('../../assets/images/couch_smile.jpg')}
+          source={require('../../assets/images/workout.jpg')}
         />
 
-        <Text style={styles.title}>
-          It's great that you are here! First things first, what should we call
-          you
+        <Text style={[styles.title, {paddingTop: top + 30}]}>
+          How many times a week do you want to be active?
         </Text>
 
         <Input
@@ -31,17 +32,14 @@ const Name: INameScreenProps = ({navigation}) => {
         />
 
         <View style={styles.buttonContainer}>
-          <Button
-            title="Continue"
-            onPress={() => navigation.navigate('DueDate')}
-          />
+          <Button title="Continue" />
         </View>
       </ScrollView>
     </Screen>
   );
 };
 
-export default Name;
+export default WorkoutPlan;
 
 const styles = StyleSheet.create({
   firstImage: {
@@ -49,12 +47,14 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   title: {
+    position: 'absolute',
+    left: 16,
+    right: 16,
     color: colors.greyishBrown,
     fontWeight: '400',
     fontSize: 24,
     textAlign: 'center',
     alignSelf: 'center',
-    marginVertical: 30,
   },
   termsContainer: {
     flexDirection: 'row',

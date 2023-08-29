@@ -1,12 +1,12 @@
 import {StyleSheet, Image, Text, ScrollView, View} from 'react-native';
 import React, {useState} from 'react';
-import {INameScreenProps} from './interfaces';
+import {IDueDateScreenProps} from './interfaces';
 import Screen from '../../components/Screen/Screen';
 import {colors} from '../../configs/colors.config';
 import Input from '../../components/Input/Input';
 import Button from '../../components/Button/Button';
 
-const Name: INameScreenProps = ({navigation}) => {
+const DueDate: IDueDateScreenProps = ({navigation}) => {
   const [name, setName] = useState('');
 
   return (
@@ -15,13 +15,10 @@ const Name: INameScreenProps = ({navigation}) => {
         <Image
           style={styles.firstImage}
           resizeMode="cover"
-          source={require('../../assets/images/couch_smile.jpg')}
+          source={require('../../assets/images/due-date.jpg')}
         />
 
-        <Text style={styles.title}>
-          It's great that you are here! First things first, what should we call
-          you
-        </Text>
+        <Text style={styles.title}>When is your baby due, Sam?</Text>
 
         <Input
           placeholder="example@gmail.com"
@@ -33,7 +30,7 @@ const Name: INameScreenProps = ({navigation}) => {
         <View style={styles.buttonContainer}>
           <Button
             title="Continue"
-            onPress={() => navigation.navigate('DueDate')}
+            onPress={() => navigation.navigate('WorkoutPlan')}
           />
         </View>
       </ScrollView>
@@ -41,7 +38,7 @@ const Name: INameScreenProps = ({navigation}) => {
   );
 };
 
-export default Name;
+export default DueDate;
 
 const styles = StyleSheet.create({
   firstImage: {
