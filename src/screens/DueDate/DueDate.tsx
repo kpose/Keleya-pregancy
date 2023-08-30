@@ -12,6 +12,7 @@ import {IDueDateScreenProps} from './interfaces';
 import Screen from '../../components/Screen/Screen';
 import {colors} from '../../configs/colors.config';
 import Button from '../../components/Button/Button';
+import {HeaderBackButton} from '@react-navigation/elements';
 
 const DueDate: IDueDateScreenProps = ({navigation, route}) => {
   const [loading, setIsLoading] = useState(false);
@@ -54,9 +55,19 @@ const DueDate: IDueDateScreenProps = ({navigation, route}) => {
     return formattedDate;
   }, [date]);
 
+  const handleBackPress = useCallback(() => {
+    if (loading) {
+      return;
+    }
+    navigation.goBack();
+  }, [loading, navigation]);
+
   return (
     <Screen>
       <ScrollView>
+        <View style={[styles.headerContainer, {}]}>
+          <HeaderBackButton label="Hello" onPress={handleBackPress} />
+        </View>
         <Image
           style={styles.firstImage}
           resizeMode="cover"
@@ -111,6 +122,14 @@ const styles = StyleSheet.create({
   firstImage: {
     height: 550,
     width: '100%',
+  },
+  headerContainer: {
+    position: 'absolute',
+    left: 0,
+    top: 0,
+    zIndex: 1,
+    marginTop: 40,
+    paddingLeft: 16,
   },
   title: {
     color: colors.greyishBrown,

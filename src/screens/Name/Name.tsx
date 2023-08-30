@@ -5,6 +5,7 @@ import Screen from '../../components/Screen/Screen';
 import {colors} from '../../configs/colors.config';
 import Input from '../../components/Input/Input';
 import Button from '../../components/Button/Button';
+import {HeaderBackButton} from '@react-navigation/elements';
 
 const Name: INameScreenProps = ({navigation}) => {
   const [name, setName] = useState('');
@@ -24,9 +25,20 @@ const Name: INameScreenProps = ({navigation}) => {
     return () => clearTimeout(timeout);
   }, [name, navigation]);
 
+  const handleBackPress = useCallback(() => {
+    if (loading) {
+      return;
+    }
+    navigation.goBack();
+  }, [loading, navigation]);
+
   return (
     <Screen>
       <ScrollView>
+        <View style={[styles.headerContainer, {}]}>
+          <HeaderBackButton label="Hello" onPress={handleBackPress} />
+        </View>
+
         <Image
           style={styles.firstImage}
           resizeMode="cover"
@@ -64,6 +76,14 @@ const styles = StyleSheet.create({
   firstImage: {
     height: 550,
     width: '100%',
+  },
+  headerContainer: {
+    position: 'absolute',
+    left: 0,
+    top: 0,
+    zIndex: 1,
+    marginTop: 40,
+    paddingLeft: 16,
   },
   title: {
     color: colors.greyishBrown,

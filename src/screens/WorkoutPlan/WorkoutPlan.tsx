@@ -6,6 +6,7 @@ import {colors} from '../../configs/colors.config';
 import Button from '../../components/Button/Button';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {Picker} from 'react-native-wheel-pick';
+import {HeaderBackButton} from '@react-navigation/elements';
 
 const WorkoutPlan: IWorkoutPlanScreenProps = ({navigation}) => {
   const [frequency, setFrequency] = useState('3 times a week');
@@ -22,8 +23,18 @@ const WorkoutPlan: IWorkoutPlanScreenProps = ({navigation}) => {
     return () => clearTimeout(timeout);
   }, [navigation]);
 
+  const handleBackPress = useCallback(() => {
+    if (loading) {
+      return;
+    }
+    navigation.goBack();
+  }, [loading, navigation]);
+
   return (
     <Screen>
+      <View style={[styles.headerContainer, {}]}>
+        <HeaderBackButton label="Hello" onPress={handleBackPress} />
+      </View>
       <View>
         <Image
           style={styles.firstImage}
@@ -76,6 +87,14 @@ const styles = StyleSheet.create({
     fontSize: 24,
     textAlign: 'center',
     alignSelf: 'center',
+  },
+  headerContainer: {
+    position: 'absolute',
+    left: 0,
+    top: 0,
+    zIndex: 1,
+    marginTop: 40,
+    paddingLeft: 16,
   },
   termsContainer: {
     flexDirection: 'row',

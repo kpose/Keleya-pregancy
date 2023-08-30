@@ -6,12 +6,12 @@ import {colors} from '../../configs/colors.config';
 import Input from '../../components/Input/Input';
 import CheckBox from '@react-native-community/checkbox';
 import Button from '../../components/Button/Button';
+import {HeaderBackButton} from '@react-navigation/elements';
 
 const Signup: ISignupScreenProps = ({navigation}) => {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [loading, setIsLoading] = useState(false);
-
   const [isPrivacyAccepted, setIsPrivacyAccepted] = useState(false);
   const [isTermsAccepted, setisTermsAccepted] = useState(false);
 
@@ -37,9 +37,20 @@ const Signup: ISignupScreenProps = ({navigation}) => {
     return () => clearTimeout(timeout);
   }, [navigation]);
 
+  const handleBackPress = useCallback(() => {
+    if (loading) {
+      return;
+    }
+    navigation.goBack();
+  }, [loading, navigation]);
+
   return (
     <Screen>
       <ScrollView>
+        <View style={[styles.headerContainer, {}]}>
+          <HeaderBackButton label="Hello" onPress={handleBackPress} />
+        </View>
+
         <Image
           style={styles.firstImage}
           resizeMode="cover"
@@ -110,6 +121,14 @@ const styles = StyleSheet.create({
   firstImage: {
     height: 400,
     width: '100%',
+  },
+  headerContainer: {
+    position: 'absolute',
+    left: 0,
+    top: 0,
+    zIndex: 1,
+    marginTop: 40,
+    paddingLeft: 16,
   },
   title: {
     color: colors.greyishBrown,
