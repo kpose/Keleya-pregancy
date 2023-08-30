@@ -13,7 +13,8 @@ const Stack = createStackNavigator<IOnboardingStackParamList>();
 
 export function OnboardingStack() {
   return (
-    <Stack.Navigator screenOptions={{headerShown: false}}>
+    <Stack.Navigator
+      screenOptions={{headerShown: false, animationEnabled: false}}>
       <Stack.Screen name="Landing" component={Landing} />
       <Stack.Screen name="Signup" component={Signup} />
       <Stack.Screen name="Name" component={Name} />
