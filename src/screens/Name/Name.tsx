@@ -1,5 +1,5 @@
 import {StyleSheet, Image, Text, ScrollView, View} from 'react-native';
-import React, {useState} from 'react';
+import React, {useCallback, useState} from 'react';
 import {INameScreenProps} from './interfaces';
 import Screen from '../../components/Screen/Screen';
 import {colors} from '../../configs/colors.config';
@@ -8,6 +8,21 @@ import Button from '../../components/Button/Button';
 
 const Name: INameScreenProps = ({navigation}) => {
   const [name, setName] = useState('');
+  const [loading, setIsLoading] = useState(false);
+
+  const updateForm = useCallback((v: string) => {
+    return setName(v);
+  }, []);
+
+  const handleContinue = useCallback(() => {
+    setIsLoading(true);
+    const timeout = setTimeout(() => {
+      setIsLoading(false);
+      navigation.navigate('DueDate', {name});
+    }, 1000);
+
+    return () => clearTimeout(timeout);
+  }, [name, navigation]);
 
   return (
     <Screen>
@@ -24,16 +39,18 @@ const Name: INameScreenProps = ({navigation}) => {
         </Text>
 
         <Input
-          placeholder="example@gmail.com"
+          placeholder="Your Name"
           value={name}
-          onChange={() => setName}
-          errorMessage="Enter a valid name"
+          onChangeText={v => updateForm(v)}
+          keyboardType="email-address"
         />
 
         <View style={styles.buttonContainer}>
           <Button
             title="Continue"
-            onPress={() => navigation.navigate('DueDate')}
+            loading={loading}
+            disabled={name.length < 3}
+            onPress={handleContinue}
           />
         </View>
       </ScrollView>

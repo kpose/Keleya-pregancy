@@ -1,16 +1,26 @@
-import {StyleSheet, Image, Text, ScrollView, View} from 'react-native';
-import React, {useState} from 'react';
+import {StyleSheet, Image, Text, View} from 'react-native';
+import React, {useCallback, useState} from 'react';
 import {IWorkoutPlanScreenProps} from './interfaces';
 import Screen from '../../components/Screen/Screen';
 import {colors} from '../../configs/colors.config';
-import Input from '../../components/Input/Input';
 import Button from '../../components/Button/Button';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {Picker, DatePicker} from 'react-native-wheel-pick';
+import {Picker} from 'react-native-wheel-pick';
 
 const WorkoutPlan: IWorkoutPlanScreenProps = ({navigation}) => {
-  const [name, setName] = useState('');
+  const [frequency, setFrequency] = useState('3 times a week');
+  const [loading, setIsLoading] = useState(false);
   const {top} = useSafeAreaInsets();
+
+  const handleContinue = useCallback(() => {
+    setIsLoading(true);
+    const timeout = setTimeout(() => {
+      setIsLoading(false);
+      navigation.navigate('Success');
+    }, 1000);
+
+    return () => clearTimeout(timeout);
+  }, [navigation]);
 
   return (
     <Screen>
@@ -38,15 +48,12 @@ const WorkoutPlan: IWorkoutPlanScreenProps = ({navigation}) => {
             'Everyday',
           ]}
           onValueChange={value => {
-            console.log(value);
+            setFrequency(value);
           }}
         />
 
         <View style={styles.buttonContainer}>
-          <Button
-            title="Continue"
-            onPress={() => navigation.navigate('Success')}
-          />
+          <Button title="Continue" loading={loading} onPress={handleContinue} />
         </View>
       </View>
     </Screen>

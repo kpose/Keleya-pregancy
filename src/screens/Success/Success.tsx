@@ -1,14 +1,13 @@
 import {StyleSheet, Image, Text, ScrollView, View} from 'react-native';
-import React, {useState} from 'react';
-import {INameScreenProps} from './interfaces';
+import React from 'react';
 import Screen from '../../components/Screen/Screen';
 import {colors} from '../../configs/colors.config';
-import Input from '../../components/Input/Input';
+
 import Button from '../../components/Button/Button';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {ISuccessScreenProps} from './interfaces';
 
-const Success: INameScreenProps = ({navigation}) => {
-  const [name, setName] = useState('');
+const Success: ISuccessScreenProps = ({navigation}) => {
   const {top, bottom} = useSafeAreaInsets();
 
   return (
@@ -29,7 +28,7 @@ const Success: INameScreenProps = ({navigation}) => {
           <View style={styles.buttonContainer}>
             <Button
               title="Allow notifications"
-              onPress={() => navigation.navigate('DueDate')}
+              // onPress={() => navigation.navigate('DueDate')}
             />
           </View>
         </View>

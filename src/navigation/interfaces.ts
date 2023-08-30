@@ -3,7 +3,7 @@ export type IOnboardingStackParamList = {
   Landing: undefined;
   Signup: undefined;
   Name: undefined;
-  DueDate: undefined;
+  DueDate: {name: string};
   WorkoutPlan: undefined;
   Success: undefined;
 };

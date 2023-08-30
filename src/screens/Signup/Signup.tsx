@@ -1,5 +1,5 @@
 import {StyleSheet, Image, Text, ScrollView, View} from 'react-native';
-import React, {useState} from 'react';
+import React, {useCallback, useState} from 'react';
 import {ISignupScreenProps} from './interfaces';
 import Screen from '../../components/Screen/Screen';
 import {colors} from '../../configs/colors.config';
@@ -9,10 +9,34 @@ import Button from '../../components/Button/Button';
 
 const Signup: ISignupScreenProps = ({navigation}) => {
   const [email, setEmail] = React.useState('');
+  const [password, setPassword] = React.useState('');
+  const [loading, setIsLoading] = useState(false);
+
   const [isPrivacyAccepted, setIsPrivacyAccepted] = useState(false);
   const [isTermsAccepted, setisTermsAccepted] = useState(false);
 
-  const [password, setPassword] = React.useState('');
+  const isValid = useCallback(() => {
+    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+    return !!password && !emailRegex.test(email);
+  }, [email, password]);
+
+  const updateForm = useCallback((v: string, tag: 'email' | 'password') => {
+    if (tag === 'email') {
+      return setEmail(v);
+    }
+    return setPassword(v);
+  }, []);
+
+  const handleContinue = useCallback(() => {
+    setIsLoading(true);
+    const timeout = setTimeout(() => {
+      setIsLoading(false);
+      navigation.navigate('Name');
+    }, 1000);
+
+    return () => clearTimeout(timeout);
+  }, [navigation]);
+
   return (
     <Screen>
       <ScrollView>
@@ -29,15 +53,16 @@ const Signup: ISignupScreenProps = ({navigation}) => {
         <Input
           placeholder="example@gmail.com"
           value={email}
-          onChange={() => setEmail}
-          errorMessage="Incorrect password"
+          onChangeText={v => updateForm(v, 'email')}
+          keyboardType="email-address"
+          // errorMessage="Incorrect password"
         />
         <Input
           placeholder="Enter a password"
           value={password}
-          onChange={() => setPassword}
+          onChangeText={v => updateForm(v, 'password')}
           secureTextEntry={true}
-          errorMessage="Incorrect password"
+          // errorMessage="Incorrect password"
         />
 
         <View style={styles.termsContainer}>
@@ -69,7 +94,9 @@ const Signup: ISignupScreenProps = ({navigation}) => {
         <View style={styles.buttonContainer}>
           <Button
             title="Create account"
-            onPress={() => navigation.navigate('Name')}
+            disabled={!isValid()}
+            loading={loading}
+            onPress={handleContinue}
           />
         </View>
       </ScrollView>

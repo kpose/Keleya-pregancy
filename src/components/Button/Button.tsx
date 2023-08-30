@@ -8,15 +8,25 @@ import {IButtonProps} from './interfaces';
  * @param props IButtonProps
  * @returns React.ReactElement
  */
-const Button: IButtonProps = ({onPress, title, loading, ...props}) => {
+const Button: IButtonProps = ({
+  onPress,
+  title,
+  loading,
+  disabled,
+  ...props
+}) => {
   return (
     <Pressable
       {...props}
       style={[
         styles.button,
-        {backgroundColor: loading ? colors.warmGrey : colors.paleTeal},
+        {
+          backgroundColor:
+            loading || disabled ? colors.warmGrey : colors.paleTeal,
+        },
       ]}
-      onPress={onPress}>
+      onPress={onPress}
+      disabled={disabled}>
       {loading ? (
         <ActivityIndicator color={colors.lightTeal} animating={true} />
       ) : (

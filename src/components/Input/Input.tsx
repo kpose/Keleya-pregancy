@@ -8,12 +8,19 @@ import {colors} from '../../configs/colors.config';
  * @param props ITextInputProps
  * @returns React.ReactElement
  */
-const Input: ITextInputProps = ({errorMessage, ...props}) => {
+const Input: ITextInputProps = ({
+  errorMessage,
+  value,
+  onChangeText,
+  ...props
+}) => {
   return (
     <View style={styles.container}>
       <TextInput
         {...props}
         style={styles.input}
+        value={value}
+        onChangeText={onChangeText}
         placeholderTextColor={colors.warmGrey}
       />
       {errorMessage ? (

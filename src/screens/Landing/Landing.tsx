@@ -6,7 +6,7 @@ import {
   ScrollView,
   Pressable,
 } from 'react-native';
-import React from 'react';
+import React, {useCallback, useState} from 'react';
 import Screen from '../../components/Screen/Screen';
 import {colors} from '../../configs/colors.config';
 import {ILandingScreenProps} from './interfaces';
@@ -15,13 +15,27 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 const Landing: ILandingScreenProps = ({navigation}) => {
   const {top} = useSafeAreaInsets();
-  const handleSignup = () => {
-    navigation.navigate('Signup');
-  };
+  const [loading, setIsLoading] = useState(false);
 
-  const handleSignin = () => {
-    return;
-  };
+  const handleSignup = useCallback(() => {
+    setIsLoading(true);
+    const timeout = setTimeout(() => {
+      setIsLoading(false);
+      navigation.navigate('Signup');
+    }, 1000);
+
+    return () => clearTimeout(timeout);
+  }, [navigation]);
+
+  const handleSignin = useCallback(() => {
+    setIsLoading(true);
+    const timeout = setTimeout(() => {
+      setIsLoading(false);
+      navigation.navigate('Signup');
+    }, 1000);
+
+    return () => clearTimeout(timeout);
+  }, [navigation]);
   return (
     <Screen>
       <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
@@ -40,10 +54,7 @@ const Landing: ILandingScreenProps = ({navigation}) => {
           />
         </View>
 
-        <Button
-          title="Get Started"
-          onPress={handleSignup} /* loading={true} */
-        />
+        <Button title="Get Started" onPress={handleSignup} loading={loading} />
 
         <Pressable style={styles.login} onPress={handleSignin}>
           <Text style={styles.loginText}>Or Login</Text>
