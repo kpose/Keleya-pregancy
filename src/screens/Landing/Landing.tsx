@@ -19,25 +19,19 @@ const Landing: ILandingScreenProps = ({navigation}) => {
   const [loading, setIsLoading] = useState(false);
   const {translate} = useLocale();
 
-  const handleSignup = useCallback(() => {
-    setIsLoading(true);
-    const timeout = setTimeout(() => {
-      setIsLoading(false);
-      navigation.navigate('Signup');
-    }, 1000);
+  const handleContinue = useCallback(
+    (tag: 'signin' | 'signup') => {
+      setIsLoading(true);
+      const timeout = setTimeout(() => {
+        setIsLoading(false);
+        navigation.navigate('Signup', {tag});
+      }, 1000);
 
-    return () => clearTimeout(timeout);
-  }, [navigation]);
+      return () => clearTimeout(timeout);
+    },
+    [navigation],
+  );
 
-  const handleSignin = useCallback(() => {
-    setIsLoading(true);
-    const timeout = setTimeout(() => {
-      setIsLoading(false);
-      navigation.navigate('Signup');
-    }, 1000);
-
-    return () => clearTimeout(timeout);
-  }, [navigation]);
   return (
     <Screen>
       <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
@@ -60,11 +54,13 @@ const Landing: ILandingScreenProps = ({navigation}) => {
 
         <Button
           title={translate({key: 'keleya-get-started'})}
-          onPress={handleSignup}
+          onPress={() => handleContinue('signup')}
           loading={loading}
         />
 
-        <Pressable style={styles.login} onPress={handleSignin}>
+        <Pressable
+          style={styles.login}
+          onPress={() => handleContinue('signin')}>
           <Text style={styles.loginText}>{translate({key: 'or-login'})}</Text>
         </Pressable>
       </ScrollView>

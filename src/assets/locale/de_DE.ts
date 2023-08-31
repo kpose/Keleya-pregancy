@@ -27,6 +27,9 @@ const de_DE: Record<string, string> = {
     'Erhalten Sie Benachrichtigungen, um Ihre Motivation zu steigern',
   'skip-notifs': 'Überspringen',
   'allow-notifs': 'Benachrichtigungen zulassen',
+  'welcome-back': 'Willkommen zurück',
+  'forgotten-password': 'Hast du dein Passwort vergessen?',
+  'Log-in': 'Anmeldung',
 };
 
 export default de_DE;

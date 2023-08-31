@@ -8,7 +8,6 @@ import Name from '../screens/Name/Name';
 import DueDate from '../screens/DueDate/DueDate';
 import WorkoutPlan from '../screens/WorkoutPlan/WorkoutPlan';
 import Success from '../screens/Success/Success';
-import {Text} from 'react-native';
 
 const Stack = createStackNavigator<IOnboardingStackParamList>();
 

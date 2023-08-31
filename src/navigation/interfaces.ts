@@ -1,7 +1,7 @@
 /* Onboarding stack */
 export type IOnboardingStackParamList = {
   Landing: undefined;
-  Signup: undefined;
+  Signup: {tag: 'signup' | 'signin'};
   Name: undefined;
   DueDate: {name: string};
   WorkoutPlan: undefined;

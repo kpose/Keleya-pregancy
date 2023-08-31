@@ -9,13 +9,15 @@ import Button from '../../components/Button/Button';
 import {HeaderBackButton} from '@react-navigation/elements';
 import {useLocale} from '../../providers/LocaleContext';
 
-const Signup: ISignupScreenProps = ({navigation}) => {
+const Signup: ISignupScreenProps = ({navigation, route}) => {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [loading, setIsLoading] = useState(false);
   const [isPrivacyAccepted, setIsPrivacyAccepted] = useState(false);
   const [isTermsAccepted, setisTermsAccepted] = useState(false);
   const {translate} = useLocale();
+
+  const isSignUp = route.params.tag === 'signup';
 
   const isValid = useCallback(() => {
     const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
@@ -60,7 +62,9 @@ const Signup: ISignupScreenProps = ({navigation}) => {
         />
 
         <Text style={styles.title}>
-          {translate({key: 'add-details-below'})}
+          {isSignUp
+            ? translate({key: 'add-details-below'})
+            : translate({key: 'welcome-back'})}
         </Text>
 
         <Input
@@ -68,43 +72,55 @@ const Signup: ISignupScreenProps = ({navigation}) => {
           value={email}
           onChangeText={v => updateForm(v, 'email')}
           keyboardType="email-address"
-          // errorMessage="Incorrect password"
         />
         <Input
           placeholder={translate({key: 'enter-a-password'})}
           value={password}
           onChangeText={v => updateForm(v, 'password')}
           secureTextEntry={true}
-          // errorMessage="Incorrect password"
         />
 
-        <View style={styles.termsContainer}>
-          <CheckBox
-            value={isPrivacyAccepted}
-            tintColor={colors.lightTeal}
-            onValueChange={v => setIsPrivacyAccepted(v)}
-            boxType="square"
-            onCheckColor={colors.lightTeal}
-            onTintColor={colors.lightTeal}
-          />
-          <Text style={styles.terms}>{translate({key: 'read-privacy'})}</Text>
-        </View>
+        {isSignUp ? (
+          <View style={styles.termsContainer}>
+            <CheckBox
+              value={isPrivacyAccepted}
+              tintColor={colors.lightTeal}
+              onValueChange={v => setIsPrivacyAccepted(v)}
+              boxType="square"
+              onCheckColor={colors.lightTeal}
+              onTintColor={colors.lightTeal}
+            />
+            <Text style={styles.terms}>{translate({key: 'read-privacy'})}</Text>
+          </View>
+        ) : null}
 
-        <View style={styles.termsContainer}>
-          <CheckBox
-            value={isTermsAccepted}
-            tintColor={colors.lightTeal}
-            onValueChange={v => setisTermsAccepted(v)}
-            boxType="square"
-            onCheckColor={colors.lightTeal}
-            onTintColor={colors.lightTeal}
-          />
-          <Text style={styles.terms}>{translate({key: 'accept-terms'})}</Text>
-        </View>
+        {isSignUp ? (
+          <View style={styles.termsContainer}>
+            <CheckBox
+              value={isTermsAccepted}
+              tintColor={colors.lightTeal}
+              onValueChange={v => setisTermsAccepted(v)}
+              boxType="square"
+              onCheckColor={colors.lightTeal}
+              onTintColor={colors.lightTeal}
+            />
+            <Text style={styles.terms}>{translate({key: 'accept-terms'})}</Text>
+          </View>
+        ) : null}
+
+        {!isSignUp ? (
+          <Text style={styles.forgotPassword}>
+            {translate({key: 'forgotten-password'})}{' '}
+          </Text>
+        ) : null}
 
         <View style={styles.buttonContainer}>
           <Button
-            title={translate({key: 'create-account'})}
+            title={
+              isSignUp
+                ? translate({key: 'create-account'})
+                : translate({key: 'Log-in'})
+            }
             disabled={!isValid()}
             loading={loading}
             onPress={handleContinue}
@@ -138,6 +154,14 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     marginTop: 20,
   },
+  forgotPassword: {
+    color: colors.greyishBrown,
+    fontWeight: '400',
+    fontSize: 24,
+    textAlign: 'center',
+    alignSelf: 'center',
+    marginTop: 100,
+  },
   termsContainer: {
     flexDirection: 'row',
     marginTop: 20,
@@ -148,6 +172,6 @@ const styles = StyleSheet.create({
     marginLeft: 10,
   },
   buttonContainer: {
-    marginVertical: 40,
+    marginVertical: 20,
   },
 });

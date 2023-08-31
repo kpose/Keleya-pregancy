@@ -24,6 +24,9 @@ const en_US: Record<string, string> = {
   'get-notifications': 'Get notifications to boost your motivation',
   'skip-notifs': 'Skip',
   'allow-notifs': 'Allow notifications',
+  'welcome-back': 'Welcome Back',
+  'forgotten-password': 'Have you forgotten your password?',
+  'Log-in': 'Log in',
 };
 
 export default en_US;
