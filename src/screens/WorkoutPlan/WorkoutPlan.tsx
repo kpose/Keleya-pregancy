@@ -1,4 +1,4 @@
-import {StyleSheet, Image, Text, View} from 'react-native';
+import {StyleSheet, Image, Text, View, Dimensions} from 'react-native';
 import React, {useCallback, useState} from 'react';
 import {IWorkoutPlanScreenProps} from './interfaces';
 import Screen from '../../components/Screen/Screen';
@@ -14,6 +14,7 @@ const WorkoutPlan: IWorkoutPlanScreenProps = ({navigation}) => {
   const [loading, setIsLoading] = useState(false);
   const {top} = useSafeAreaInsets();
   const {translate} = useLocale();
+  const {height} = Dimensions.get('screen');
 
   const handleContinue = useCallback(() => {
     setIsLoading(true);
@@ -39,7 +40,7 @@ const WorkoutPlan: IWorkoutPlanScreenProps = ({navigation}) => {
       </View>
       <View>
         <Image
-          style={styles.firstImage}
+          style={[styles.firstImage, {height: height / 2}]}
           resizeMode="cover"
           source={require('../../assets/images/workout.jpg')}
         />
@@ -81,7 +82,6 @@ export default WorkoutPlan;
 
 const styles = StyleSheet.create({
   firstImage: {
-    height: 550,
     width: '100%',
   },
   title: {

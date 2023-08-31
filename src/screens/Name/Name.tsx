@@ -1,4 +1,11 @@
-import {StyleSheet, Image, Text, ScrollView, View} from 'react-native';
+import {
+  StyleSheet,
+  Image,
+  Text,
+  ScrollView,
+  View,
+  Dimensions,
+} from 'react-native';
 import React, {useCallback, useState} from 'react';
 import {INameScreenProps} from './interfaces';
 import Screen from '../../components/Screen/Screen';
@@ -12,6 +19,7 @@ const Name: INameScreenProps = ({navigation}) => {
   const [name, setName] = useState('');
   const [loading, setIsLoading] = useState(false);
   const {translate} = useLocale();
+  const {height} = Dimensions.get('screen');
 
   const updateForm = useCallback((v: string) => {
     return setName(v);
@@ -42,26 +50,28 @@ const Name: INameScreenProps = ({navigation}) => {
         </View>
 
         <Image
-          style={styles.firstImage}
+          style={[styles.firstImage, {height: height / 2}]}
           resizeMode="cover"
           source={require('../../assets/images/couch_smile.jpg')}
         />
 
-        <Text style={styles.title}>{translate({key: 'it-is-great'})}</Text>
+        <View style={{paddingHorizontal: 16}}>
+          <Text style={styles.title}>{translate({key: 'it-is-great'})}</Text>
 
-        <Input
-          placeholder={translate({key: 'your-name'})}
-          value={name}
-          onChangeText={v => updateForm(v)}
-        />
-
-        <View style={styles.buttonContainer}>
-          <Button
-            title={translate({key: 'continue-in'})}
-            loading={loading}
-            disabled={name.length < 3}
-            onPress={handleContinue}
+          <Input
+            placeholder={translate({key: 'your-name'})}
+            value={name}
+            onChangeText={v => updateForm(v)}
           />
+
+          <View style={styles.buttonContainer}>
+            <Button
+              title={translate({key: 'continue-in'})}
+              loading={loading}
+              disabled={name.length < 3}
+              onPress={handleContinue}
+            />
+          </View>
         </View>
       </ScrollView>
     </Screen>
@@ -72,7 +82,6 @@ export default Name;
 
 const styles = StyleSheet.create({
   firstImage: {
-    height: 550,
     width: '100%',
   },
   headerContainer: {

@@ -1,4 +1,11 @@
-import {StyleSheet, Image, Text, ScrollView, View} from 'react-native';
+import {
+  StyleSheet,
+  Image,
+  Text,
+  ScrollView,
+  View,
+  Dimensions,
+} from 'react-native';
 import React from 'react';
 import Screen from '../../components/Screen/Screen';
 import {colors} from '../../configs/colors.config';
@@ -11,6 +18,7 @@ import {useLocale} from '../../providers/LocaleContext';
 const Success: ISuccessScreenProps = ({navigation}) => {
   const {top, bottom} = useSafeAreaInsets();
   const {translate} = useLocale();
+  const {height} = Dimensions.get('screen');
 
   return (
     <Screen>
@@ -19,7 +27,7 @@ const Success: ISuccessScreenProps = ({navigation}) => {
           {translate({key: 'get-notifications'})}
         </Text>
         <Image
-          style={styles.firstImage}
+          style={[styles.firstImage, {height: height / 1.2}]}
           resizeMode="cover"
           source={require('../../assets/images/notifications.jpg')}
         />
@@ -40,7 +48,6 @@ export default Success;
 
 const styles = StyleSheet.create({
   firstImage: {
-    height: 800,
     width: '100%',
   },
   skip: {

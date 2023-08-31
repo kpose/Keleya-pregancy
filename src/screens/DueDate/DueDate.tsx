@@ -5,6 +5,7 @@ import {
   ScrollView,
   View,
   Pressable,
+  Dimensions,
 } from 'react-native';
 import React, {useCallback, useState} from 'react';
 import DatePicker from 'react-native-date-picker';
@@ -21,6 +22,7 @@ const DueDate: IDueDateScreenProps = ({navigation, route}) => {
   const [open, setOpen] = useState(false);
   const username = route.params.name ? route.params.name : '';
   const {translate} = useLocale();
+  const {height} = Dimensions.get('screen');
 
   const handleContinue = useCallback(() => {
     setIsLoading(true);
@@ -71,49 +73,51 @@ const DueDate: IDueDateScreenProps = ({navigation, route}) => {
           <HeaderBackButton label="Hello" onPress={handleBackPress} />
         </View>
         <Image
-          style={styles.firstImage}
+          style={[styles.firstImage, {height: height / 1.7}]}
           resizeMode="cover"
           source={require('../../assets/images/due-date.jpg')}
         />
 
-        <Text style={styles.title}>
-          {translate({key: 'when-is-baby-due', params: {name: username}})}
-        </Text>
+        <View style={{paddingHorizontal: 16}}>
+          <Text style={styles.title}>
+            {translate({key: 'when-is-baby-due', params: {name: username}})}
+          </Text>
 
-        <View>
-          <Pressable
-            style={styles.dueDateContainer}
-            onPress={() => setOpen(true)}>
-            <Text style={{color: colors.paleTeal}}>{_dueDate()}</Text>
-          </Pressable>
-        </View>
+          <View>
+            <Pressable
+              style={styles.dueDateContainer}
+              onPress={() => setOpen(true)}>
+              <Text style={{color: colors.paleTeal}}>{_dueDate()}</Text>
+            </Pressable>
+          </View>
 
-        <DatePicker
-          modal
-          open={open}
-          date={date ? date : new Date()}
-          mode="date"
-          androidVariant="nativeAndroid"
-          title={translate({key: 'select-due-date'})}
-          // locale="de_DE"
-          minimumDate={new Date()}
-          onConfirm={date => {
-            setOpen(false);
-            setDate(date);
-            //
-          }}
-          onCancel={() => {
-            setOpen(false);
-          }}
-        />
-
-        <View style={styles.buttonContainer}>
-          <Button
-            title={translate({key: 'continue-in'})}
-            onPress={handleContinue}
-            loading={loading}
-            disabled={!date}
+          <DatePicker
+            modal
+            open={open}
+            date={date ? date : new Date()}
+            mode="date"
+            androidVariant="nativeAndroid"
+            title={translate({key: 'select-due-date'})}
+            // locale="de_DE"
+            minimumDate={new Date()}
+            onConfirm={date => {
+              setOpen(false);
+              setDate(date);
+              //
+            }}
+            onCancel={() => {
+              setOpen(false);
+            }}
           />
+
+          <View style={styles.buttonContainer}>
+            <Button
+              title={translate({key: 'continue-in'})}
+              onPress={handleContinue}
+              loading={loading}
+              disabled={!date}
+            />
+          </View>
         </View>
       </ScrollView>
     </Screen>
@@ -124,7 +128,6 @@ export default DueDate;
 
 const styles = StyleSheet.create({
   firstImage: {
-    height: 550,
     width: '100%',
   },
   headerContainer: {

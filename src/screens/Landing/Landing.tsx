@@ -5,6 +5,7 @@ import {
   Text,
   ScrollView,
   Pressable,
+  Dimensions,
 } from 'react-native';
 import React, {useCallback, useState} from 'react';
 import Screen from '../../components/Screen/Screen';
@@ -18,6 +19,8 @@ const Landing: ILandingScreenProps = ({navigation}) => {
   const {top} = useSafeAreaInsets();
   const [loading, setIsLoading] = useState(false);
   const {translate} = useLocale();
+  const {height} = Dimensions.get('screen');
+  const IMAGE_HEIGHT = height / 1.9;
 
   const handleContinue = useCallback(
     (tag: 'signin' | 'signup') => {
@@ -46,7 +49,7 @@ const Landing: ILandingScreenProps = ({navigation}) => {
           </Text>
 
           <Image
-            style={styles.firstImage}
+            style={[styles.firstImage, {height: IMAGE_HEIGHT}]}
             resizeMode="cover"
             source={require('../../assets/images/first_image.png')}
           />
@@ -90,7 +93,6 @@ const styles = StyleSheet.create({
     color: colors.greyishBrown,
   },
   firstImage: {
-    height: 550,
     width: '100%',
   },
   getStartedText: {
