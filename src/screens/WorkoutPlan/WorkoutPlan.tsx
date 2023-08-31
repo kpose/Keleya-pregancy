@@ -7,11 +7,13 @@ import Button from '../../components/Button/Button';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {Picker} from 'react-native-wheel-pick';
 import {HeaderBackButton} from '@react-navigation/elements';
+import {useLocale} from '../../providers/LocaleContext';
 
 const WorkoutPlan: IWorkoutPlanScreenProps = ({navigation}) => {
   const [frequency, setFrequency] = useState('3 times a week');
   const [loading, setIsLoading] = useState(false);
   const {top} = useSafeAreaInsets();
+  const {translate} = useLocale();
 
   const handleContinue = useCallback(() => {
     setIsLoading(true);
@@ -33,7 +35,7 @@ const WorkoutPlan: IWorkoutPlanScreenProps = ({navigation}) => {
   return (
     <Screen>
       <View style={[styles.headerContainer, {}]}>
-        <HeaderBackButton label="Hello" onPress={handleBackPress} />
+        <HeaderBackButton onPress={handleBackPress} />
       </View>
       <View>
         <Image
@@ -43,20 +45,20 @@ const WorkoutPlan: IWorkoutPlanScreenProps = ({navigation}) => {
         />
 
         <Text style={[styles.title, {paddingTop: top + 30}]}>
-          How many times a week do you want to be active?
+          {translate({key: 'how-many-times'})}
         </Text>
 
         <Picker
           style={styles.picker}
-          selectedValue="3 times a week"
+          selectedValue={translate({key: 'trice-weekly'})}
           pickerData={[
-            'Once a week',
-            '2 times a week',
-            '3 times a week',
-            '4 times a week',
-            '5 times a week',
-            '6 times a week',
-            'Everyday',
+            `${translate({key: 'once-weekly'})}`,
+            `${translate({key: 'twice-weekly'})}`,
+            `${translate({key: 'trice-weekly'})}`,
+            `${translate({key: '4-weekly'})}`,
+            `${translate({key: '5-weekly'})}`,
+            `${translate({key: '6-weekly'})}`,
+            `${translate({key: '7-weekly'})}`,
           ]}
           onValueChange={value => {
             setFrequency(value);
@@ -64,7 +66,11 @@ const WorkoutPlan: IWorkoutPlanScreenProps = ({navigation}) => {
         />
 
         <View style={styles.buttonContainer}>
-          <Button title="Continue" loading={loading} onPress={handleContinue} />
+          <Button
+            title={translate({key: 'continue-in'})}
+            loading={loading}
+            onPress={handleContinue}
+          />
         </View>
       </View>
     </Screen>

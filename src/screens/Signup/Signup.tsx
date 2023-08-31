@@ -7,6 +7,7 @@ import Input from '../../components/Input/Input';
 import CheckBox from '@react-native-community/checkbox';
 import Button from '../../components/Button/Button';
 import {HeaderBackButton} from '@react-navigation/elements';
+import {useLocale} from '../../providers/LocaleContext';
 
 const Signup: ISignupScreenProps = ({navigation}) => {
   const [email, setEmail] = React.useState('');
@@ -14,6 +15,7 @@ const Signup: ISignupScreenProps = ({navigation}) => {
   const [loading, setIsLoading] = useState(false);
   const [isPrivacyAccepted, setIsPrivacyAccepted] = useState(false);
   const [isTermsAccepted, setisTermsAccepted] = useState(false);
+  const {translate} = useLocale();
 
   const isValid = useCallback(() => {
     const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
@@ -58,7 +60,7 @@ const Signup: ISignupScreenProps = ({navigation}) => {
         />
 
         <Text style={styles.title}>
-          Add your details below to set up an account
+          {translate({key: 'add-details-below'})}
         </Text>
 
         <Input
@@ -69,7 +71,7 @@ const Signup: ISignupScreenProps = ({navigation}) => {
           // errorMessage="Incorrect password"
         />
         <Input
-          placeholder="Enter a password"
+          placeholder={translate({key: 'enter-a-password'})}
           value={password}
           onChangeText={v => updateForm(v, 'password')}
           secureTextEntry={true}
@@ -85,7 +87,7 @@ const Signup: ISignupScreenProps = ({navigation}) => {
             onCheckColor={colors.lightTeal}
             onTintColor={colors.lightTeal}
           />
-          <Text style={styles.terms}>I've read the privacy policy</Text>
+          <Text style={styles.terms}>{translate({key: 'read-privacy'})}</Text>
         </View>
 
         <View style={styles.termsContainer}>
@@ -97,14 +99,12 @@ const Signup: ISignupScreenProps = ({navigation}) => {
             onCheckColor={colors.lightTeal}
             onTintColor={colors.lightTeal}
           />
-          <Text style={styles.terms}>
-            I accept the terms & conditions and Keleya's advice
-          </Text>
+          <Text style={styles.terms}>{translate({key: 'accept-terms'})}</Text>
         </View>
 
         <View style={styles.buttonContainer}>
           <Button
-            title="Create account"
+            title={translate({key: 'create-account'})}
             disabled={!isValid()}
             loading={loading}
             onPress={handleContinue}

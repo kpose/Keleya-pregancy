@@ -13,12 +13,14 @@ import Screen from '../../components/Screen/Screen';
 import {colors} from '../../configs/colors.config';
 import Button from '../../components/Button/Button';
 import {HeaderBackButton} from '@react-navigation/elements';
+import {useLocale} from '../../providers/LocaleContext';
 
 const DueDate: IDueDateScreenProps = ({navigation, route}) => {
   const [loading, setIsLoading] = useState(false);
   const [date, setDate] = useState<Date>();
   const [open, setOpen] = useState(false);
   const username = route.params.name ? route.params.name : '';
+  const {translate} = useLocale();
 
   const handleContinue = useCallback(() => {
     setIsLoading(true);
@@ -32,7 +34,7 @@ const DueDate: IDueDateScreenProps = ({navigation, route}) => {
 
   const _dueDate = useCallback(() => {
     if (!date) {
-      return 'Select Due Date';
+      return `${translate({key: 'select-due-date'})}`;
     }
     const months = [
       'Jan',
@@ -53,7 +55,7 @@ const DueDate: IDueDateScreenProps = ({navigation, route}) => {
     const day = date.getDate();
     const formattedDate = `${months[monthIndex]} ${day}, ${year}`;
     return formattedDate;
-  }, [date]);
+  }, [date, translate]);
 
   const handleBackPress = useCallback(() => {
     if (loading) {
@@ -74,7 +76,9 @@ const DueDate: IDueDateScreenProps = ({navigation, route}) => {
           source={require('../../assets/images/due-date.jpg')}
         />
 
-        <Text style={styles.title}>{`When is your baby due, ${username}`}</Text>
+        <Text style={styles.title}>
+          {translate({key: 'when-is-baby-due', params: {name: username}})}
+        </Text>
 
         <View>
           <Pressable
@@ -90,8 +94,8 @@ const DueDate: IDueDateScreenProps = ({navigation, route}) => {
           date={date ? date : new Date()}
           mode="date"
           androidVariant="nativeAndroid"
-          title={'Select Due Date'}
-          locale="de_DE"
+          title={translate({key: 'select-due-date'})}
+          // locale="de_DE"
           minimumDate={new Date()}
           onConfirm={date => {
             setOpen(false);
@@ -105,7 +109,7 @@ const DueDate: IDueDateScreenProps = ({navigation, route}) => {
 
         <View style={styles.buttonContainer}>
           <Button
-            title="Continue"
+            title={translate({key: 'continue-in'})}
             onPress={handleContinue}
             loading={loading}
             disabled={!date}

@@ -6,10 +6,12 @@ import {colors} from '../../configs/colors.config';
 import Input from '../../components/Input/Input';
 import Button from '../../components/Button/Button';
 import {HeaderBackButton} from '@react-navigation/elements';
+import {useLocale} from '../../providers/LocaleContext';
 
 const Name: INameScreenProps = ({navigation}) => {
   const [name, setName] = useState('');
   const [loading, setIsLoading] = useState(false);
+  const {translate} = useLocale();
 
   const updateForm = useCallback((v: string) => {
     return setName(v);
@@ -36,7 +38,7 @@ const Name: INameScreenProps = ({navigation}) => {
     <Screen>
       <ScrollView>
         <View style={[styles.headerContainer, {}]}>
-          <HeaderBackButton label="Hello" onPress={handleBackPress} />
+          <HeaderBackButton onPress={handleBackPress} />
         </View>
 
         <Image
@@ -45,21 +47,17 @@ const Name: INameScreenProps = ({navigation}) => {
           source={require('../../assets/images/couch_smile.jpg')}
         />
 
-        <Text style={styles.title}>
-          It's great that you are here! First things first, what should we call
-          you
-        </Text>
+        <Text style={styles.title}>{translate({key: 'it-is-great'})}</Text>
 
         <Input
-          placeholder="Your Name"
+          placeholder={translate({key: 'your-name'})}
           value={name}
           onChangeText={v => updateForm(v)}
-          keyboardType="email-address"
         />
 
         <View style={styles.buttonContainer}>
           <Button
-            title="Continue"
+            title={translate({key: 'continue-in'})}
             loading={loading}
             disabled={name.length < 3}
             onPress={handleContinue}

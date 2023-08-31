@@ -29,8 +29,6 @@ const Landing: ILandingScreenProps = ({navigation}) => {
     return () => clearTimeout(timeout);
   }, [navigation]);
 
-  console.log(translate({key: 'keleya-send'}));
-
   const handleSignin = useCallback(() => {
     setIsLoading(true);
     const timeout = setTimeout(() => {
@@ -49,7 +47,9 @@ const Landing: ILandingScreenProps = ({navigation}) => {
             resizeMode="contain"
             source={require('../../assets/images/keleya-logo.png')}
           />
-          <Text style={styles.slogan}>For a fit and relaxed pregnancy</Text>
+          <Text style={styles.slogan}>
+            {translate({key: 'keleya-fit-and-relaxed'})}
+          </Text>
 
           <Image
             style={styles.firstImage}
@@ -58,10 +58,14 @@ const Landing: ILandingScreenProps = ({navigation}) => {
           />
         </View>
 
-        <Button title="Get Started" onPress={handleSignup} loading={loading} />
+        <Button
+          title={translate({key: 'keleya-get-started'})}
+          onPress={handleSignup}
+          loading={loading}
+        />
 
         <Pressable style={styles.login} onPress={handleSignin}>
-          <Text style={styles.loginText}>Or Login</Text>
+          <Text style={styles.loginText}>{translate({key: 'or-login'})}</Text>
         </Pressable>
       </ScrollView>
     </Screen>

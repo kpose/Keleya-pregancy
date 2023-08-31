@@ -6,15 +6,17 @@ import {colors} from '../../configs/colors.config';
 import Button from '../../components/Button/Button';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {ISuccessScreenProps} from './interfaces';
+import {useLocale} from '../../providers/LocaleContext';
 
 const Success: ISuccessScreenProps = ({navigation}) => {
   const {top, bottom} = useSafeAreaInsets();
+  const {translate} = useLocale();
 
   return (
     <Screen>
       <ScrollView showsVerticalScrollIndicator={false}>
         <Text style={[{paddingTop: top + 20}, styles.heading]}>
-          Get notifications to boost your motivation
+          {translate({key: 'get-notifications'})}
         </Text>
         <Image
           style={styles.firstImage}
@@ -23,13 +25,10 @@ const Success: ISuccessScreenProps = ({navigation}) => {
         />
 
         <View style={[styles.footer, {bottom: bottom}]}>
-          <Text style={styles.skip}>Skip</Text>
+          <Text style={styles.skip}> {translate({key: 'skip-notifs'})}</Text>
 
           <View style={styles.buttonContainer}>
-            <Button
-              title="Allow notifications"
-              // onPress={() => navigation.navigate('DueDate')}
-            />
+            <Button title={translate({key: 'allow-notifs'})} />
           </View>
         </View>
       </ScrollView>
