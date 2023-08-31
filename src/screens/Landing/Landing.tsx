@@ -12,10 +12,12 @@ import {colors} from '../../configs/colors.config';
 import {ILandingScreenProps} from './interfaces';
 import Button from '../../components/Button/Button';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {useLocale} from '../../providers/LocaleContext';
 
 const Landing: ILandingScreenProps = ({navigation}) => {
   const {top} = useSafeAreaInsets();
   const [loading, setIsLoading] = useState(false);
+  const {translate} = useLocale();
 
   const handleSignup = useCallback(() => {
     setIsLoading(true);
@@ -26,6 +28,8 @@ const Landing: ILandingScreenProps = ({navigation}) => {
 
     return () => clearTimeout(timeout);
   }, [navigation]);
+
+  console.log(translate({key: 'keleya-send'}));
 
   const handleSignin = useCallback(() => {
     setIsLoading(true);
